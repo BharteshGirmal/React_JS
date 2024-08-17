@@ -3,6 +3,7 @@ import './categorylist.styles.scss';
 export default function CategoryItem ({category}) {
 
 const { imageUrl, title}= category;
+console.log(category);
 console.log(title);
   return ( 
       <div  className="category-container">

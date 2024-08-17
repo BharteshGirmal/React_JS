@@ -212,3 +212,7 @@ DOM and Virtual DOM :
 
 DOM = Document Object Model its a visual representation of HTML tree structure
 Virtual DOM = is a Virtual representation of actal DOM 
+
+
+SASS:
+cmd : npm add sass
