@@ -300,3 +300,157 @@ App.js
 	</Routes>
 	
 Nesting of Routes using {Outlet} from 'react-router-dom'
+
+Navbar:
+	<div>
+	<h1>This is a Navbar</h1>
+	<Outlet/>
+	</div>
+	
+Homepage:
+	<div>
+	<h1>Homepage Context</h1>
+	</div>
+	
+App.js
+<Routes>
+<Route path="/" element={<Navbar/>}>
+<Route index element={<Homepage />}/>
+</Route>
+</Routes>
+
+This will load the navigation bar as constant with homepage
+
+Firebase And Authentication
+
+	Database Name : Capstone-db
+
+	add package in react : npm add firebase 
+
+	CRUD (Create Read Update Delete)
+	
+							Fetch Data (Using Auth Token)
+				-------------------------------->
+	App													Firebase
+				<--------------------------------
+	|  |				Return Data (If Auth Success) Else Return Error
+	|  |
+	|  |
+	|  |Sign In
+	|  |
+	|  |
+	|  |______________>    Google
+	|__________________
+	Sends the Auth Token
+	
+Firebase Code :
+	-Open the firebase open console page
+	-create a project
+	-click on web button and Name the project
+	- Firebase will give the readymade JS Code for the project 
+	
+	import { initializeApp } from "firebase/app";
+	
+	const firebaseConfig = {
+	  apiKey: "AIzaSyDV-4MVx1XvicF3OT5GF9kVs8AR2_4YQ-w",
+	  authDomain: "capstone-db-7244a.firebaseapp.com",
+	  projectId: "capstone-db-7244a",
+	  storageBucket: "capstone-db-7244a.appspot.com",
+	  messagingSenderId: "660774090004",
+	  appId: "1:660774090004:web:224cf7f8a65f9e8abbbe01"
+	};
+
+	const app = initializeApp(firebaseConfig);
+	
+	- use Google sign in methods from firebase
+	
+		import {initializeApp} from 'firebase/app'
+		import {
+			  getAuth, 
+			  signInWithRedirect, 
+			  signInWithPopup, 
+			  GoogleAuthProvider} from 'firebase/auth'
+
+		const firebaseConfig = {
+			  apiKey: "AIzaSyDV-4MVx1XvicF3OT5GF9kVs8AR2_4YQ-w",
+			  authDomain: "capstone-db-7244a.firebaseapp.com",
+			  projectId: "capstone-db-7244a",
+			  storageBucket: "capstone-db-7244a.appspot.com",
+			  messagingSenderId: "660774090004",
+			  appId: "1:660774090004:web:224cf7f8a65f9e8abbbe01"
+			  };
+
+		const FireBaseApp = initializeApp(firebaseConfig);
+
+		const provider = new GoogleAuthProvider();
+		propvider.setCustomParameters({
+			  prompt:'select_account'
+		})
+
+		export const auth = getAuth();
+		export const signInRedirect = ()=> signInWithPopup(auth, provider);
+		
+Firestore Database :
+Add Rules to true
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+
+JS:
+import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
+import {
+      getAuth, 
+      signInWithRedirect, 
+      signInWithPopup, 
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider} from 'firebase/auth'
+	 
+// Creating auth and provider to firestore database
+
+export const firebaseDB = getFirestore();
+
+
+export const createUserData = async (userAuth, {extraInfo})=>{
+      if(!userAuth) return;
+      if(!extraInfo) return;
+      // userAuth.uid = is a unique id to search in the firestore database
+      const UserDocRef = doc(firebaseDB, 'users', userAuth.uid);
+      console.log('====================================');
+      console.log(UserDocRef);
+      console.log('====================================');
+
+      const userSnapshot = await getDoc(UserDocRef);
+
+      // if userSnapshot does not exists
+      if(!userSnapshot.exists()){
+        const {displayName, email} = userAuth;
+        const createdAt = new Date();
+        try {
+            await setDoc(UserDocRef, {
+                  displayName,
+                  email,
+                  createdAt,
+                  ...extraInfo
+            });
+
+            console.log('User Created');
+            
+        } catch (error) {
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+        }
+      }
+      // if userSnapshot.exists
+      return UserDocRef;
+}
+
+React Context Hook (useContext()):
+
+
+

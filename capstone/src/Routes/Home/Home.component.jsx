@@ -1,7 +1,5 @@
 import React  from 'react'
 import Directory from '../../Components/Directory/Directory.component'
-import Navbar from '../../Components/Navbar/Navbar.component';
-
 export default function Home (){
       
   const category= [
@@ -37,8 +35,8 @@ export default function Home (){
     ];
 
     return (
-      <>
+      <div>
       <Directory category={category}/>
-      </>
+      </div>
     )
 }
