@@ -450,7 +450,30 @@ export const createUserData = async (userAuth, {extraInfo})=>{
       return UserDocRef;
 }
 
-React Context Hook:
+React Context Hook (useContext()):
+Usercontext.jsx:
+	import React, { createContext } from 'react'
+
+	export const userContext = createContext();
+
+	export const UserProvider= ({children})=> {
+	  return (
+		<userContext.Provider>{children}</userContext.Provider>
+	  )
+	} 
+	
+Index.js Changes :
+
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+		<UserProvider>
+			App/>
+		</UserProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
 
 
 

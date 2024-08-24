@@ -1,10 +1,12 @@
 import {initializeApp} from 'firebase/app'
 import {
       getAuth, 
+      signOut,
       signInWithRedirect, 
       signInWithPopup, 
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
+      onAuthStateChanged,
       GoogleAuthProvider} from 'firebase/auth'
 
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
@@ -33,11 +35,8 @@ export const signInWithGoogleRedirect = ()=> signInWithRedirect(auth,googlePropv
 
 export const firebaseDB = getFirestore();
 
-export const createUserData= async (userAuth, {extraInfo})=>{
+export const createUserData= async (userAuth)=>{
       if(!userAuth) return;
-      if(extraInfo) {
-            extraInfo={};
-      }
       // userAuth.uid = is a unique id to search in the firestore database
       const UserDocRef = doc(firebaseDB, 'users', userAuth.uid);
       console.log('====================================');
@@ -55,7 +54,6 @@ export const createUserData= async (userAuth, {extraInfo})=>{
                   displayName,
                   email,
                   createdAt,
-                  ...extraInfo
             });
 
             console.log('User Created');
@@ -81,3 +79,7 @@ export const SignInUserWithEmailPassword= async(email, password)=>{
 
       return await signInWithEmailAndPassword(auth, email, password);
 }
+
+export const SignoutUser= async()=> await signOut(auth);
+
+export const onAuthStateChangeListener = (callback)=> onAuthStateChanged(auth, callback);

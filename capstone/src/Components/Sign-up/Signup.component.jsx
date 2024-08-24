@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { createUserData, createUserWithEmailPassword } from '../../Utils/Firebase/Firebase.utils';
 import FormInput from '../Form-input/Form-input.coponent';
 import './signup.styles.scss';
 import Button from '../Buttons/Buttons.components';
+// import { userContext } from '../../Contexts/User.context';
 const defaultFields = {
   displayName: '',
   email: '',
@@ -13,7 +14,7 @@ const defaultFields = {
 export default function Signup() {
   const [formFields, setFormFields] = useState(defaultFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
+  // const {setUserName}= useContext(userContext)
   const resetForm=()=>{
       setFormFields(defaultFields);
   }
@@ -28,7 +29,9 @@ export default function Signup() {
     try {
       const {user} = await createUserWithEmailPassword(email, password);
       console.log(user);
-
+      // setUserName(user);
+      console.log(displayName);
+      
       await createUserData(user, {displayName});
       resetForm();
 
