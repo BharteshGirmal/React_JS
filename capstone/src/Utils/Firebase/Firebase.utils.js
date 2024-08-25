@@ -9,7 +9,7 @@ import {
       onAuthStateChanged,
       GoogleAuthProvider} from 'firebase/auth'
 
-import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
+import {getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs} from 'firebase/firestore'
 
 const firebaseConfig = {
       apiKey: "AIzaSyDV-4MVx1XvicF3OT5GF9kVs8AR2_4YQ-w",
@@ -34,6 +34,43 @@ export const signInPopup = ()=> signInWithPopup(auth, googlePropvider);
 export const signInWithGoogleRedirect = ()=> signInWithRedirect(auth,googlePropvider);
 
 export const firebaseDB = getFirestore();
+
+export const AddCollectionAndDocuments = async (collectionKey, objectToAdd)=>{
+      const CollectionRef = collection(firebaseDB,collectionKey );
+      // for secure successfull transaction use batch method
+      const batch =  writeBatch(firebaseDB);
+      objectToAdd.forEach((object)=>{
+            const docRef = doc(CollectionRef, object.title.toLowerCase());
+            batch.set(docRef, object);
+      });
+      await batch.commit();
+      console.log('Database created...');
+}
+
+export const getCollectionAndDocument = async ()=>{
+      const collectionRef = collection(firebaseDB, 'categories');
+      const Q = query(collectionRef);
+      console.log('====================================');
+      console.log(Q);
+      console.log('====================================');
+      const querySnapShot = await getDocs(Q);
+      console.log('====================================');
+      console.log(querySnapShot);
+      console.log('====================================');
+      const categoryMap = querySnapShot.docs.reduce((acc, docSnapShot)=>{
+            const {title, items}= docSnapShot.data();
+            acc[title.toLowerCase()] = items;
+
+            return acc;
+            
+      }, {});
+
+      console.log('====================================');
+      console.log(categoryMap);
+      console.log('====================================');
+      return categoryMap;
+
+}
 
 export const createUserData= async (userAuth)=>{
       if(!userAuth) return;

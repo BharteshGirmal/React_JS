@@ -475,5 +475,62 @@ root.render(
 );
 
 
+Observer Pattern :
+
+using firbase/auth - onAuthStateChange
+
+Firestore database 
+
+-Its a NoSQL database
+
+1) Inserting collection and documents to firestore 
+
+Collection, writeBatch from firebase/firestore
+
+Utils:
+
+export const firebaseDB = getFirestore();
+
+export const AddCollectionAndDocuments = async (collectionKey, objectToAdd)=>{
+      const CollectionRef = collection(firebaseDB,collectionKey );
+      // for secure successfull transaction use batch method
+      const batch =  writeBatch(firebaseDB);
+
+      objectToAdd.forEach((object)=>{
+            const docRef = doc(CollectionRef, object.title.toLowerCase());
+            batch.set(docRef, object);
+      });
+
+      await batch.commit();
+      console.log('Database created...');
+      
+
+}
+
+Usage:
+	import SHOP_DATA from '../Shop-data';
+	import React, { useEffect } from 'react'
+
+	import { AddCollectionAndDocuments } from '../Utils/Firebase/Firebase.utils';
+
+	
+	useEffect(() => {
+	  AddCollectionAndDocuments('categories', SHOP_DATA);
+	}, []);
+
+
+2)  Fetching the collection and document 
+
+import query, getdocs from './firebase/firestore';
+
+
+
+CSS in JS :
+
+npm add styled-components:
+
+
+
+
 
 

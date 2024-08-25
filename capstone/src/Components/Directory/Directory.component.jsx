@@ -1,5 +1,5 @@
 import React from 'react'
-import CategoryItem from '../Category-Item/CategoryItem.coponent'
+import CategoryItem from '../Directory-Item/DirectoryItem.coponent'
 import './Directory.styles.scss';
 export default function Directory({category}) {
   return (

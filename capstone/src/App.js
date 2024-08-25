@@ -13,8 +13,8 @@ function App() {
     <Routes>
       <Route path='/' element={<Navbar/>}>
         <Route index element={<Home/>}/>
-        <Route path='/shop' element={<Shop/>}/>
-        <Route path='/checkout' element={<Checkout/>}/>
+        <Route path='shop/*' element={<Shop/>}/>
+        <Route path='checkout' element={<Checkout/>}/>
         <Route path='auth' element={<Authentication/>}/>
       </Route>
     </Routes>

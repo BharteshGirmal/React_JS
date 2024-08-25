@@ -1,14 +1,14 @@
 import React from 'react'
-import './categorylist.styles.scss';
+import './DirectoryItem.styles.scss'
 export default function CategoryItem ({category}) {
 
 const { imageUrl, title}= category;
 console.log(category);
 console.log(title);
   return ( 
-      <div  className="category-container">
+      <div  className="directory-container">
       <div className='background-image' style={{backgroundImage:`url(${imageUrl})`}} />
-      <div className="category-body-container">
+      <div className="directory-body-container">
       <h1>{title}</h1>
       <p>Shop Now</p>
       </div>

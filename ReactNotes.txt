@@ -477,4 +477,89 @@ root.render(
 
 Observer Pattern :
 
+using firbase/auth - onAuthStateChange
+
+Firestore database 
+
+-Its a NoSQL database
+
+1) Inserting collection and documents to firestore 
+
+Collection, writeBatch from firebase/firestore
+
+Utils:
+
+export const firebaseDB = getFirestore();
+
+export const AddCollectionAndDocuments = async (collectionKey, objectToAdd)=>{
+      const CollectionRef = collection(firebaseDB,collectionKey );
+      // for secure successfull transaction use batch method
+      const batch =  writeBatch(firebaseDB);
+
+      objectToAdd.forEach((object)=>{
+            const docRef = doc(CollectionRef, object.title.toLowerCase());
+            batch.set(docRef, object);
+      });
+
+      await batch.commit();
+      console.log('Database created...');
+      
+
+}
+
+Usage:
+	import SHOP_DATA from '../Shop-data';
+	import React, { useEffect } from 'react'
+
+	import { AddCollectionAndDocuments } from '../Utils/Firebase/Firebase.utils';
+
+	
+	useEffect(() => {
+	  AddCollectionAndDocuments('categories', SHOP_DATA);
+	}, []);
+
+
+2)  Fetching the collection and document 
+
+import query, getdocs from './firebase/firestore';
+
+
+
+CSS in JS :
+
+npm add styled-components:
+
+Converting css/scss file to styled component 
+
+import styled from "styled-component"
+import Link from "react-router-dom"
+
+
+export const NavigationContainer = styled.div`
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: radial-gradient(circle at top left, #333, #666, #000); /* Radial gradient effect */
+  padding: 0 10px; /* Padding for spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for the navbar */
+  margin-bottom: 10px;
+`
+
+export const NavLinks = styled(Link)`
+  color: #ffffff; /* White color for the links */
+  text-decoration: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px; 
+  .nav-link:hover {
+      background-color: rgba(247, 197, 169, 0.2); /* Hover effect */
+      } 
+`
+
+
+
+
+
 
