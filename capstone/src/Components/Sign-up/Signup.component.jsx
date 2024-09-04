@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { createUserData, createUserWithEmailPassword } from '../../Utils/Firebase/Firebase.utils';
 import FormInput from '../Form-input/Form-input.coponent';
 import './signup.styles.scss';

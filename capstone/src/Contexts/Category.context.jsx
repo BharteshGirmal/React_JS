@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from 'react'
 // import PRODUCTS from '../shop-data.json';
 
 // import SHOP_DATA from '../Shop-data';
-import { AddCollectionAndDocuments , getCollectionAndDocument} from '../Utils/Firebase/Firebase.utils';
+import {  getCollectionAndDocument} from '../Utils/Firebase/Firebase.utils';
 
 export const CategoryContext = createContext({
       categoryMap:{},

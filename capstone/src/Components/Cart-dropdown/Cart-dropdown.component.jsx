@@ -3,7 +3,7 @@ import './Cart-dropdown.styles.scss';
 import Buttons from '../../Components/Buttons/Buttons.components';
 import CartItem from '../Cart-item/cart-item.component';
 import { CartContext } from '../../Contexts/Cart-context';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartDropdown() {
   const {cartItems}= useContext(CartContext);

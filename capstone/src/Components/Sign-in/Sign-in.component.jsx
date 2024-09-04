@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { signInPopup, SignInUserWithEmailPassword, createUserData } from '../../Utils/Firebase/Firebase.utils';
+import { signInPopup, SignInUserWithEmailPassword } from '../../Utils/Firebase/Firebase.utils';
 import FormInput from '../Form-input/Form-input.coponent';
 import './sign-in.styles.scss'
 import { userContext } from '../../Contexts/User.context';
@@ -14,6 +14,8 @@ export default function Signin() {
   const [formFields, setFormFields] = useState(defaultFields);
   const { email, password } = formFields;
   const { setUserName } = useContext(userContext);
+  console.log(setUserName);
+  
   // const {userName} = useContext(userContext);
   const resetForm = () => {
     setFormFields(defaultFields);
