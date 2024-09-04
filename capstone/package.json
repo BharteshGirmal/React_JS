@@ -28,9 +28,10 @@
       "react-app/jest"
     ],
     "rules": {
-    "no-extra-boolean-cast": "off",
-    "no-extra-semi": "warn"
-  }
+      "no-extra-boolean-cast": "off",
+      "no-extra-semi": "warn",
+      "no-unused-vars": "warn" 
+    }
   },
   "browserslist": {
     "production": [
