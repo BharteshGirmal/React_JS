@@ -6,6 +6,8 @@
 
   img {
     width: 30%;
+    border-radius: 5px;
+    object-fit: cover;
   }
 
   .item-details {
@@ -21,7 +23,7 @@
     }
   }
 
-  // Responsive Styles
+  // Tablet view
   @media screen and (max-width: 768px) {
     height: 70px;
     margin-bottom: 10px;
@@ -40,14 +42,18 @@
     }
   }
 
+  // Mobile view
   @media screen and (max-width: 480px) {
-    flex-direction: column;
+    width: 50%;
+
+    flex-direction: row;
     height: auto;
     margin-bottom: 10px;
     padding: 10px 0;
+    align-items: center;
 
     img {
-      width: 100%;
+      width: 80%;
       height: auto;
       margin-bottom: 10px;
     }
@@ -55,17 +61,19 @@
     .item-details {
       width: 100%;
       padding: 5px 10px;
+      align-items: center;
 
       .name {
         font-size: 13px;
+        text-align: center;
       }
     }
   }
 
+  // Small mobile view
   @media screen and (max-width: 320px) {
     .item-details {
       padding: 5px;
-
       .name {
         font-size: 12px;
       }

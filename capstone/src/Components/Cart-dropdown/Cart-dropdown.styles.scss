@@ -1,6 +1,7 @@
 .cart-dropdown-container {
   position: absolute;
   width: 500px;
+  max-width: 90%;
   height: 340px;
   display: flex;
   flex-direction: column;
@@ -8,22 +9,78 @@
   border: 1px solid black;
   background-color: white;
   top: 90px;
-  right: 0px;
+  right: 10px;
   z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 
   .empty-message {
     font-size: 18px;
-    margin: 50px auto;
+    text-align: center;
+    margin: auto;
   }
 
   .cart-items {
     height: 240px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
   }
 
   button {
     margin-top: auto;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #555;
+    }
+  }
+
+  // Responsive Styles
+  @media screen and (max-width: 768px) {
+    width: 400px;
+    max-width: 90%;
+    top: 70px;
+    right: 10px;
+    height: 320px;
+
+    .empty-message {
+      font-size: 16px;
+    }
+
+    .cart-items {
+      height: 200px;
+    }
+
+    button {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    top: 13rem;
+    height: auto;
+    padding: 15px;
+
+    .empty-message {
+      font-size: 14px;
+    }
+
+    .cart-items {
+      height: 180px;
+    }
+
+    button {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
   }
 }
