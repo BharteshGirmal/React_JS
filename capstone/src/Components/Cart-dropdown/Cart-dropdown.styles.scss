@@ -21,15 +21,14 @@
   }
 
   .cart-items {
-    height: 240px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+    flex: 1;
+    max-height: 240px; /* Set maximum height */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
     padding-right: 10px; /* Space for scrollbar */
   }
 
   button {
-    margin-top: auto;
+    margin-top: 10px;
     width: 100%;
     padding: 10px;
     font-size: 1rem;
@@ -37,26 +36,21 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    position: sticky; /* Keep the button visible at the bottom */
+    bottom: 0;
 
     &:hover {
       background-color: #555;
     }
   }
 
-  // Responsive Styles
   @media screen and (max-width: 768px) {
     width: 400px;
-    max-width: 90%;
     top: 70px;
-    right: 10px;
     height: 320px;
 
-    .empty-message {
-      font-size: 16px;
-    }
-
     .cart-items {
-      height: 200px;
+      max-height: 200px;
     }
 
     button {
@@ -70,12 +64,8 @@
     height: auto;
     padding: 15px;
 
-    .empty-message {
-      font-size: 14px;
-    }
-
     .cart-items {
-      height: 180px;
+      max-height: 180px;
     }
 
     button {

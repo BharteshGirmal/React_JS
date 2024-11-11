@@ -5,6 +5,7 @@ import Home from './Routes/Home/Home.component';
 import {Routes, Route} from 'react-router-dom';
 import Shop from './Routes/Shop/Shop.component';
 import Checkout from './Routes/Checkout/Checkout.components';
+import PhoneAuthComponent from './Components/Sign-in_OTP/SigninOtp';
 // import Signin from './Components/Sign-in/Sign-in.component';
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='shop/*' element={<Shop/>}/>
         <Route path='checkout' element={<Checkout/>}/>
         <Route path='auth' element={<Authentication/>}/>
+        <Route path='singnWithOtp' element={<PhoneAuthComponent/>}/>
       </Route>
     </Routes>
   );

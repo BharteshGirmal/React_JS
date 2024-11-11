@@ -1,63 +1,137 @@
 .checkout-item-container {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr;
-  align-items: center;
-  padding: 15px 0;
+  display: table;
+  table-layout: fixed; /* Prevent shrinking */
   border-bottom: 1px solid darkgrey;
-  font-size: 18px;
+  padding: 10px 0;
+  font-size: 18px; /* Default font size */
+}
+
+.image-container {
+  display: table-cell;
+  width: 100px;
+  padding-right: 10px;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}
+
+.name,
+.quantity,
+.price,
+.remove {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Quantity Section */
+.quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+
+  .arrow {
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 20px;
+  }
+
+  .value {
+    margin: 0 5px;
+  }
+}
+
+.remove {
+  display: table-cell;
+  text-align: center;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Tablet view */
+@media screen and (max-width: 768px) {
+  .checkout-item-container {
+    font-size: 16px; /* Reduce font size for tablets */
+  }
 
   .image-container {
-    img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+    width: 80px;
   }
 
-  .name,
-  .quantity,
-  .price {
-    text-align: center;
-  }
-
-  .quantity {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .arrow {
-      cursor: pointer;
-      padding: 0 10px;
-    }
-
-    .value {
-      margin: 0 10px;
-    }
+  .arrow {
+    font-size: 18px;
+    padding: 0 5px;
   }
 
   .remove {
-    text-align: center;
-    cursor: pointer;
+    font-size: 18px;
   }
 
-  // Responsive Styles
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 0.5fr;
-    font-size: 16px;
+  .name,
+  .price,
+  .quantity,
+  .remove {
+    font-size: 16px; /* Ensure font size for smaller screens */
+  }
+}
+
+/* Mobile view */
+@media screen and (max-width: 480px) {
+  .checkout-item-container {
+    font-size: 10px; /* Reduce font size for mobile */
   }
 
-  @media screen and (max-width: 480px) {
-    grid-template-columns: 1fr 1fr 0.5fr;
-    font-size: 14px;
+  .image-container {
+    width: 70px;
+  }
 
-    .quantity {
-      .arrow {
-        padding: 0 5px;
-      }
-      .value {
-        margin: 0 5px;
-      }
+  .name {
+    font-size: 10px;
+  }
+
+  .quantity {
+
+    .arrow {
+      padding: 0 5px;
+      font-size: 10px;
     }
+
+    .value {
+      font-size: 10px;
+    }
+  }
+
+  .price,
+  .remove {
+    font-size: 10px;
+  }
+}
+
+/* Small mobile view */
+@media screen and (max-width: 320px) {
+  .checkout-item-container {
+    font-size: 12px; /* Even smaller font size for very small screens */
+  }
+
+  .image-container {
+    width: 60px;
+  }
+
+  .arrow {
+    font-size: 14px;
+  }
+
+  .remove {
+    font-size: 14px;
   }
 }

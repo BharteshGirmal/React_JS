@@ -560,7 +560,20 @@ export const NavLinks = styled(Link)`
 
 
 
-styled components Buttons :
+styled components using {styled, css} :
+
+const subColor = 'grey';
+const mainColor = 'black';
+
+const shrinklabel = css`
+	top:'-20px';
+	sont-size:'15px';
+	color:${mainColor};
+`
+
+
+React Redux:
+	Reducers:
 
 
 

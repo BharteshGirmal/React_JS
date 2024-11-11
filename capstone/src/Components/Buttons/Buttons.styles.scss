@@ -1,9 +1,11 @@
 .button-container {
+  display: flex; /* Add Flexbox layout */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
   min-width: 165px;
   width: auto;
   height: 50px;
   letter-spacing: 0.5px;
-  line-height: 50px;
   padding: 0 35px;
   font-size: 15px;
   background-color: black;
@@ -13,7 +15,7 @@
   font-weight: bolder;
   border: none;
   cursor: pointer;
-  justify-content: center;
+  text-align: center;
 
   &:hover {
     background-color: white;
@@ -43,28 +45,23 @@
     }
   }
 
-  // Responsive styles
+  /* Responsive styles */
   @media screen and (max-width: 768px) {
-    min-width: 0.8rem;
-    font-size: 0.5rem;
+    min-width: 120px;
     height: 45px;
     font-size: 14px;
     padding: 0 25px;
   }
 
   @media screen and (max-width: 480px) {
-    min-width: 0.8rem;
-    font-size: 0.5rem;
-
+    min-width: 100px;
     height: 40px;
     font-size: 13px;
     padding: 0 20px;
   }
 
   @media screen and (max-width: 320px) {
-    min-width: .8rem;
-    font-size: 0.5rem;
-
+    min-width: 90px;
     height: 35px;
     font-size: 12px;
     padding: 0 15px;
