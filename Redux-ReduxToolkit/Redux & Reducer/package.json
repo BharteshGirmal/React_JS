@@ -1,0 +1,24 @@
+{
+  "name": "redux",
+  "version": "1.0.0",
+  "description": "redux and reducer pattern in detail",
+  "main": "Script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "immer": "^10.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.28.1",
+    "redux": "^5.0.1"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
