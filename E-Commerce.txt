@@ -1,0 +1,363 @@
+App.js
+import React, { Component } from 'react';
+import Navbar from './Components/Navbar';
+import News from './Components/News';
+import {
+  Route,
+  Routes,
+  BrowserRouter
+} from "react-router-dom";
+// import LoadingBar from 'react-top-loading-bar'
+
+export default class App extends Component {
+  // api_key value
+  api_key = "546d508e17b24c65813f217640bd9780";
+
+  state = {
+    progress: 0
+  }
+
+  setProgress = (progress) => {
+    this.setState({ progress });
+  }
+
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container-fluid">
+            {/* <LoadingBar
+              height={5}
+              color='#f11946'
+              progress={this.state.progress}
+            > */}
+            <Routes>
+              <Route
+                path="/appliances"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="appliances" category="appliances" country="in" />}
+              />
+              <Route
+                path="/mobile"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="mobile" category="mobile" country="in" />}
+              />
+              <Route
+                path="/tv"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="tv" category="tv"  />}
+              />
+              <Route
+                path="/laptop"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="laptop" category="laptop" country="in" />}
+              />
+              <Route
+                path="/gaming"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="gaming" category="gaming" country="in" />}
+              />
+              <Route
+                path="/audio"
+                element={<News api_key={this.api_key} setProgress={this.setProgress} pageSize={12} key="audio" category="audio" country="in" />}
+              />
+            </Routes>
+            {/* </LoadingBar> */}
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
+
+
+Navbar.js
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+export default function Navbar() {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
+      <div className="container-fluid p-2">
+        <Link className="navbar-brand  fw-bold fs-4" to="/laptop">E Commerce</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/appliances">Appliances</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/mobile">Mobiles</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/laptop">Laptops</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/tv">Television</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/gaming">Gaming</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white hover-bg-light rounded px-3 py-2 transition-all" to="/audio">Audio</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+News.js
+import React, { useState, useEffect } from "react";
+import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+const News = (props) => {
+  const [products, setProducts] = useState([]); // Change articles to products
+  const [loading, setLoading] = useState(false);
+  const [showDiv, setShowDiv] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(10);
+
+  const { category, pageSize, setProgress } = props;
+
+  const updatePages = async () => {
+    setProgress(10);
+    const URL = `https://fakestoreapi.in/api/products/category?type=${category}`; // URL provided
+    console.log(URL);
+    setLoading(true);
+
+    let data = await fetch(URL);
+    setProgress(50);
+
+    let parsedData = await data.json();
+    setProgress(70);
+
+    setProducts(parsedData.products); // Use products instead of articles
+    setTotalResults(parsedData.products.length); // Assuming totalResults is just the length of products
+    setLoading(false);
+    setShowDiv(true);
+
+    setProgress(100);
+  };
+
+  useEffect(() => {
+    updatePages();
+  }, [page]);
+
+  const fetchMoreData = async () => {
+    setPage(page + 1);
+  };
+
+  let count = 0;
+  console.log(products.length);
+
+  return (
+    <>
+      <div className="container-fluid mt-2">
+       {showDiv &&  <h4 className="alert alert-success text-center">
+          Product Showcase - Top Products from {category}
+        </h4>}
+      </div>
+      <InfiniteScroll
+        dataLength={products.length}
+        next={fetchMoreData}
+        hasMore={products.length !== totalResults}
+        loader={loading && <Spinner />}
+      >
+        <div className="container">
+          <div className="row mt-3">
+            {products.map((product) => {
+              count++;
+              return (
+                <div className="col-md-4" key={product.id}> {/* Use unique id */}
+                  <NewsItem
+                    title={product.title ? product.title.slice(0, 45) : ""}
+                    description={
+                      product.description ? product.description.slice(0, 88) : ""
+                    }
+                    imageURL={product.image}
+                    price={product.price}
+                    brand={product.brand}
+                    model={product.model}
+                    discount={product.discount}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </InfiniteScroll>
+    </>
+  );
+};
+
+
+export default News;
+
+NewsItem.js
+import React from 'react';
+
+const NewsItem = ({ title, description, imageURL, price, brand, model, discount }) => {
+  // Format the description to avoid it being too long
+  const shortDescription = description ? description.slice(0, 88) : "No description available";
+
+  return (
+    <div className="card shadow-lg mb-4" style={{ border: '1px solid #ddd', borderRadius: '8px' }}>
+      {/* Image Section */}
+      <img
+        src={imageURL && imageURL.endsWith('.jpg') ? imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxgrd6iuhDTYxsdjR6Fg50ydpqqWCbPPVZ_w&s"}
+        className="card-img-center"
+        alt="Product Thumbnail"
+        style={{
+          objectFit: 'fit',
+          height: '200px',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px'
+        }}
+      />
+      <div className="card-body">
+        {/* Brand Label */}
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <span className="badge rounded-pill bg-primary">{brand || "Unknown Brand"}</span>
+          {discount > 0 && (
+            <span className="badge rounded-pill bg-danger">{discount}% off</span>
+          )}
+        </div>
+
+        {/* Product Title */}
+        <h5 className="card-title">{title}</h5>
+
+        {/* Short Description */}
+        <p className="card-text text-muted">{shortDescription}</p>
+
+        {/* Price, Model, and Discount Info */}
+        <div className="d-flex justify-content-between">
+          <p className="card-text"><strong>Price:</strong> ${price}</p>
+          <p className="card-text"><strong>Model:</strong> {model || "Unknown Model"}</p>
+        </div>
+
+        {/* Buy Now Button */}
+        <a
+          rel="noreferrer"
+          href="#"
+          className="btn btn-sm btn-dark mt-2"
+        >
+          Buy Now
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default NewsItem;
+
+
+Spinner.js
+import React, { Component } from 'react'
+import SpinnerText from './Spinner.gif';
+export default class Spinner extends Component {
+  render() {
+    return (
+      <div className='text-center mx-2 mb-2'>
+        <img src={SpinnerText} alt="Loading" />
+      </div>
+    )
+  }
+}
+
+Alert.js
+import React from 'react'
+
+export default function Alerts(props) {
+  return (
+    <div style={{height:'50px'}}> 
+    {props.alert && <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+    <strong>{props.alert.type}</strong> - {props.alert.message}
+    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>}</div>
+  )
+}
+
+
+Index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/Twitter X Icon PNG.jfif" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="This is a Text Utils app to convert the text as you want"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/Twitter X Icon PNG.jfif" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>E-Commerce App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+Package.json
+{
+  "name": "text-utils-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-router-dom": "^6.23.1",
+    "react-scripts": "^3.0.1",
+    "react-top-loading-bar": "^2.3.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
+
+
+
+
+
