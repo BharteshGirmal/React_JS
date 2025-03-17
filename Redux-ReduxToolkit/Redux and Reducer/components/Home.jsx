@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Product from "./Product";
 import {
@@ -57,7 +57,7 @@ export default function Home() {
   // console.log("shimmerCount :" + shimmerCount);
 
   return (
-    <>
+    <Fragment>
       {isloading ? (
         // Render shimmer placeholders dynamically based on shimmerCount
         <div className="shimmer-container products-container">
@@ -84,6 +84,6 @@ export default function Home() {
           ))}
         </div>
       )}
-    </>
+    </Fragment>
   );
 }

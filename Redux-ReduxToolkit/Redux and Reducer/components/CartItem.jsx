@@ -1,4 +1,6 @@
 import { useDispatch } from "react-redux";
+import React from "react";
+
 import {
   decreaseItemQuantity,
   increaseItemQuantity,
@@ -37,7 +39,6 @@ export default function CartItem({
         >
           +
         </button>
-        
       </div>
       <div className="item-total">${quantity * price}</div>
       <div className="item-remove">
@@ -48,7 +49,7 @@ export default function CartItem({
               const userConfirmed = confirm(
                 `Are you sure you want to remove "${title}" from the cart?`
               );
-              
+
               if (userConfirmed) {
                 dispatch(removeFromCart(productId));
               }

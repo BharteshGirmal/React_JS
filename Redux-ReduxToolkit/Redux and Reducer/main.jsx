@@ -1,33 +1,33 @@
 import { createRoot } from "react-dom/client";
-import App from "./app";
+import App from "./app.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
+import React from "react";
 
-
-// Creating a routing 
+// Creating a routing
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/cart',
+        path: "/cart",
         element: <Cart />,
       },
     ],
   },
-])
+]);
 
-createRoot(document.querySelector('#root')).render(
+createRoot(document.querySelector("#root")).render(
   <Provider store={store}>
     <RouterProvider router={router} />
   </Provider>
-)
+);
